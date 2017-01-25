@@ -1,0 +1,16 @@
+1. Create a database
+    [x] Create a table to store book info
+    [x] Columns for title, author, publication date.
+
+2. Server side:
+    [x] Route for GETing book info
+    [] Route for posting new books
+
+      // stretch goals //
+    [] Route for updating books
+    [] Route for deleting books
+
+3. Client side:
+    [] AJAX call for getting books
+    [] AJAX call for creating books
+    [] Some way to display books
