@@ -37,7 +37,7 @@ router.get('/', function(req, res) {
       // 1st arg - SQL query we want to running
       // 2nd arg- callback - function to run after DB gives us our result
             // takes an err object and result object as it's arguments
-      client.query('SELECT * FROM books;', function(err, result){
+      client.query('SELECT * FROM books ORDER BY title;', function(err, result){
         done();
         if (err) {
           console.log('Error querying DB', err);
@@ -87,6 +87,54 @@ router.post('/', function(req, res) {
       }
     }); // end pool connection
 }); // end router.post
+
+//localhost:300/books/4
+//req.params.id === '4'
+router.put('/:id', function(req, res) {
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log('Error connecting to DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('UPDATE books SET title=$2, author=$3, publication_date=$4, edition=$5, publisher=$6  WHERE id = $1 RETURNING *',
+      [req.params.id, req.body.title, req.body.author, req.body.published, req.body.edition, req.body.publisher],
+      function(err, result) {
+        if (err) {
+          console.log("Error deleting book", err);
+          sendStatus(500);
+        } else {
+          res.send(result.rows);
+        }
+        done();
+      });
+    }
+  });// end pool
+}); // end router.put
+
+router.delete('/:id', function(req, res) {
+  pool.connect(function (err, client, done) {
+    if (err) {
+      console.log('Error connecting to DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('DELETE FROM books WHERE id = $1', [req.params.id],
+      function(err, result) {
+        if (err) {
+          console.log("Error deleting book", err);
+          sendStatus(500);
+        } else {
+          res.sendStatus(204);
+        }
+        done();
+      });
+    }
+  });// end pool
+});// end router.delete()
+
+
+
 
 
 module.exports = router;

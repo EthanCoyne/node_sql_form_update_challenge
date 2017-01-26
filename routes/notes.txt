@@ -7,10 +7,11 @@
     [] Route for posting new books
 
       // stretch goals //
-    [] Route for updating books
-    [] Route for deleting books
+    [x] Route for updating books
+    [x] Route for deleting books
 
 3. Client side:
-    [] AJAX call for getting books
-    [] AJAX call for creating books
-    [] Some way to display books
+    [x] AJAX call for getting books
+    [x] AJAX call for creating books
+    [x] Some way to display books
+    [] Some way to delete books
